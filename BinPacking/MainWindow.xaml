@@ -5,13 +5,13 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:BinPacking"
         mc:Ignorable="d"
-        Title="MainWindow" Height="450" Width="800">
+        Title="MainWindow" Height="501" Width="800">
     <Grid>
-        <Border BorderBrush="Black" BorderThickness="1" HorizontalAlignment="Left" Height="399" Margin="10,10,0,0" VerticalAlignment="Top" Width="451" RenderTransformOrigin="-1.348,0.088">
-            <Canvas x:Name="mainCanvas" Margin="9" Width="451" Height="399"/>
+        <Border x:Name="mainBorder" BorderBrush="Black" BorderThickness="1" HorizontalAlignment="Left" Height="399" Margin="10,10,0,0" VerticalAlignment="Top" Width="451" RenderTransformOrigin="-1.348,0.088">
+            <Canvas x:Name="mainCanvas" Width="{Binding ElementName=mainBorder, Path=Width}" Height="{Binding ElementName=mainBorder, Path=Height}"/>
         </Border>
-        <Border BorderBrush="Black" BorderThickness="1" HorizontalAlignment="Left" Height="372" Margin="466,37,0,0" VerticalAlignment="Top" Width="316">
-            <Canvas x:Name="sideCanvas"/>
+        <Border x:Name="sideBorder" BorderBrush="Black" BorderThickness="1" HorizontalAlignment="Left" Height="372" Margin="466,37,0,0" VerticalAlignment="Top" Width="316">
+            <Canvas x:Name="sideCanvas" Width="{Binding ElementName=sideBorder, Path=Width}" Height="{Binding ElementName=sideBorder, Path=Height}"/>
         </Border>
         <Label x:Name="label" Content="Rectangles to be drawn:" HorizontalAlignment="Left" Margin="466,11,0,0" VerticalAlignment="Top" Width="136"/>
         <Button x:Name="BtnNextStep" Content="One Step >" HorizontalAlignment="Left" Margin="690,14,0,0" VerticalAlignment="Top" Width="92" Click="BtnNextStep_Click"/>

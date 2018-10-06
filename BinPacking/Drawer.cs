@@ -80,7 +80,15 @@ namespace BinPacking
             ResetSideCanvasPositions();
             foreach (BinPackRectangle rectangle in Rectangles.Where(rect => !rect.IsAssigned))
             {
-                if (rectangle.XPos is null && rectangle.YPos is null) {
+                if (StartY + rectangle.Rectangle.Height >= SideCanvas.Height)
+                {
+                    BinPackRectangle widestRectangle = Rectangles.Where(r => !r.IsAssigned).OrderByDescending(r => r.Rectangle.Width + r.XPos).FirstOrDefault();
+                    StartX = Convert.ToInt32(widestRectangle.XPos + widestRectangle.Rectangle.Width) + 5;
+                    StartY = START_Y_POS_SIDE;
+                }
+
+                if (rectangle.XPos is null && rectangle.YPos is null)
+                {
                     rectangle.XPos = StartX;
                     rectangle.YPos = StartY;
                 }

@@ -30,12 +30,20 @@ namespace BinPacking
             InitializeComponent();
             CreateRectangles();
             Drawer = new Drawer(rectangles, sideCanvas, mainCanvas);
+            /*
+            bool stillWorking = true;
+            while(stillWorking)
+            {
+                Drawer.SelectRandomRectangle();
+                stillWorking = Drawer.AssignRectangleToMain();
+            }
+            */
         }
 
         private void CreateRectangles()
         {
             rectangles.Clear();
-            for(int i = 0; i < 15; i++)
+            for(int i = 0; i < 50; i++)
                 rectangles.Add(new BinPackRectangle(new Rectangle {
                     Stroke = new SolidColorBrush(Colors.Black),
                     StrokeThickness = 1,

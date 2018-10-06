@@ -31,8 +31,8 @@ namespace BinPacking
         {
             Dictionary<Space, int> dict = new Dictionary<Space, int>();
             FreeSpace.Where(space => space.DoesFit(Width, Height)).ToList().ForEach(space => dict.Add(space, Math.Min(space.Height - Height, space.Width - Width)));
-
-            return dict.Where(kvp => kvp.Value == dict.Min(kv => kv.Value)).First().Key;
+            KeyValuePair<Space, int> kp = dict.Where(kvp => kvp.Value == dict.Min(kv => kv.Value)).FirstOrDefault();
+            return kp.Key;
         }
     }
 
