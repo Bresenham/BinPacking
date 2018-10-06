@@ -14,7 +14,7 @@ namespace BinPacking
 
         public (int x, int y) GetFreeSpace(int Width, int Height)
         {
-            Space Free = FreeSpace.Where(space => space.DoesFit(Width, Height)).FirstOrDefault();
+            Space Free = ChooseBestFit(Width, Height);
             if (Free != null) {
                 Space NewSpaceOne = new Space(Free.Width - Width, Height, Free.X + Width, Free.Y);
                 Space NewSpaceTwo = new Space(Free.Width, Free.Height - Height, Free.X, Free.Y + Height);
@@ -25,6 +25,14 @@ namespace BinPacking
             }
             else
                 return (-1, -1);
+        }
+
+        private Space ChooseBestFit(int Width, int Height)
+        {
+            Dictionary<Space, int> dict = new Dictionary<Space, int>();
+            FreeSpace.Where(space => space.DoesFit(Width, Height)).ToList().ForEach(space => dict.Add(space, Math.Min(space.Height - Height, space.Width - Width)));
+
+            return dict.Where(kvp => kvp.Value == dict.Min(kv => kv.Value)).First().Key;
         }
     }
 

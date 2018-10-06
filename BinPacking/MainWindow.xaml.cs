@@ -35,7 +35,7 @@ namespace BinPacking
         private void CreateRectangles()
         {
             rectangles.Clear();
-            for(int i = 0; i < 10; i++)
+            for(int i = 0; i < 15; i++)
                 rectangles.Add(new BinPackRectangle(new Rectangle {
                     Stroke = new SolidColorBrush(Colors.Black),
                     StrokeThickness = 1,

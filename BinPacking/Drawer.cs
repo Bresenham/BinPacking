@@ -36,6 +36,8 @@ namespace BinPacking
 
         public bool AssignRectangleToMain()
         {
+            if (SelectedRectangle is null)
+                return false;
             UpdateSideCanvas();
             (int XPos, int YPos) = MainCanvasSpace.GetFreeSpace(Convert.ToInt32(SelectedRectangle.Rectangle.Width), 
                                                                 Convert.ToInt32(SelectedRectangle.Rectangle.Height));
@@ -48,7 +50,6 @@ namespace BinPacking
                 UpdateMainCanvas();
                 return true;
             }
-
             return false;
         }
 
@@ -60,6 +61,8 @@ namespace BinPacking
                 SelectedRectangle = Rectangles.Where(rect => !rect.IsAssigned).ToArray()[randomIndex];
                 SelectedRectangle.IsSelected = true;
             }
+            else
+                SelectedRectangle = null;
         }
 
         private void UpdateMainCanvas()
