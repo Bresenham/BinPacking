@@ -48,6 +48,7 @@ namespace BinPacking
                 SelectedRectangle.IsAssigned = true;
                 SelectedRectangle.IsSelected = false;
                 UpdateMainCanvas();
+                MainCanvasSpace.DrawSpaces(MainCanvas);
                 return true;
             }
             return false;
@@ -55,14 +56,13 @@ namespace BinPacking
 
         public void SelectRandomRectangle()
         {
+            SelectedRectangle = null;
             if (Rectangles.Where(rect => !rect.IsAssigned).Count() > 0)
             {
                 int randomIndex = Rnd.Next(0, Rectangles.Where(rect => !rect.IsAssigned).Count());
                 SelectedRectangle = Rectangles.Where(rect => !rect.IsAssigned).ToArray()[randomIndex];
                 SelectedRectangle.IsSelected = true;
             }
-            else
-                SelectedRectangle = null;
         }
 
         private void UpdateMainCanvas()

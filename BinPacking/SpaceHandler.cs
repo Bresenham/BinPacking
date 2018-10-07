@@ -3,12 +3,15 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using System.Windows.Controls;
+using System.Windows.Media;
+using System.Windows.Shapes;
 
 namespace BinPacking
 {
     public class SpaceHandler
     {
-        private List<Space> FreeSpace = new List<Space>();
+        private readonly List<Space> FreeSpace = new List<Space>();
 
         public SpaceHandler(int Width, int Height) { FreeSpace.Add(new Space(Width, Height)); }
 
@@ -27,12 +30,20 @@ namespace BinPacking
                 return (-1, -1);
         }
 
+        public void DrawSpaces(Canvas canvas) => FreeSpace.ForEach(space => {
+            Rectangle rect = space.Rectangle;
+            if (!canvas.Children.Contains(rect)) {
+                Canvas.SetLeft(rect, space.X);
+                Canvas.SetTop(rect, space.Y);
+                canvas.Children.Add(rect);
+            }
+        });
+
         private Space ChooseBestFit(int Width, int Height)
         {
             Dictionary<Space, int> dict = new Dictionary<Space, int>();
             FreeSpace.Where(space => space.DoesFit(Width, Height)).ToList().ForEach(space => dict.Add(space, Math.Min(space.Height - Height, space.Width - Width)));
-            KeyValuePair<Space, int> kp = dict.Where(kvp => kvp.Value == dict.Min(kv => kv.Value)).FirstOrDefault();
-            return kp.Key;
+            return dict.Where(kvp => kvp.Value == dict.Min(kv => kv.Value)).FirstOrDefault().Key;
         }
     }
 
@@ -44,10 +55,21 @@ namespace BinPacking
         public int X { get; }
         public int Y { get; }
 
+        public Rectangle Rectangle { get; }
+
         public Space(int Width, int Height) : this(Width, Height, 0, 0) { }
 
         public Space(int Width, int Height, int X, int Y)
         {
+            Rectangle = new Rectangle
+            {
+                Width = Width,
+                Height = Height,
+                Stroke = new SolidColorBrush(Colors.Red),
+                StrokeThickness = 1,
+                Fill = new SolidColorBrush(Colors.LightGray)
+            };
+
             this.Width = Width;
             this.Height = Height;
             this.X = X;

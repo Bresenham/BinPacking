@@ -30,14 +30,14 @@ namespace BinPacking
             InitializeComponent();
             CreateRectangles();
             Drawer = new Drawer(rectangles, sideCanvas, mainCanvas);
-            /*
+
             bool stillWorking = true;
             while(stillWorking)
             {
                 Drawer.SelectRandomRectangle();
                 stillWorking = Drawer.AssignRectangleToMain();
             }
-            */
+
         }
 
         private void CreateRectangles()
