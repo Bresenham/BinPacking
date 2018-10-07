@@ -31,13 +31,14 @@ namespace BinPacking
             CreateRectangles();
             Drawer = new Drawer(rectangles, sideCanvas, mainCanvas);
 
+            /*
             bool stillWorking = true;
             while(stillWorking)
             {
                 Drawer.SelectRandomRectangle();
                 stillWorking = Drawer.AssignRectangleToMain();
             }
-
+            */
         }
 
         private void CreateRectangles()
@@ -54,13 +55,15 @@ namespace BinPacking
 
         private void BtnNextStep_Click(object sender, RoutedEventArgs e)
         {
-            if (selectedRectangle) {
-                Drawer.AssignRectangleToMain();
-                selectedRectangle = false;
-            } else {
-                Drawer.SelectRandomRectangle();
-                selectedRectangle = true;
-            }
+            Drawer.AssignRectangleToMain();
+        }
+
+        private void SideCanvas_MouseLeftButtonDown(object sender, MouseButtonEventArgs e) {
+            Drawer.OnSideCanvasClick(e.GetPosition(sideCanvas));
+        }
+
+        private void SideBorder_MouseMove(object sender, MouseEventArgs e) {
+            Drawer.OnSideCanvasHover(e.GetPosition(sideCanvas));
         }
     }
 }

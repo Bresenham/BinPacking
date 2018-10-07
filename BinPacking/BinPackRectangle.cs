@@ -15,24 +15,34 @@ namespace BinPacking
         public int? YPos { get; set; }
         public Rectangle Rectangle { get; }
         public bool IsAssigned { get; set; }
+        private bool _isSelected = false;
         public bool IsSelected
         {
-            get { return IsSelected; }
-            set
-            {
-                if(value)
-                {
+            get { return _isSelected; }
+            set {
+                _isSelected = value;
+                if(value) {
                     Rectangle.Stroke = new SolidColorBrush(Colors.Red);
                     Rectangle.StrokeThickness = 2;
                 } else
-                {
-                    Rectangle.Stroke = new SolidColorBrush(Colors.Black);
-                    Rectangle.StrokeThickness = 1;
-                }
+                    SetDefaultStroke();
+            }
+        }
+        public bool IsHovered
+        {
+            get { return IsHovered; }
+            set {
+                if (value) { 
+                    if (!_isSelected) {
+                        Rectangle.Stroke = new SolidColorBrush(Colors.Gray);
+                        Rectangle.StrokeThickness = 2;
+                    }
+                } else if(!_isSelected)
+                    SetDefaultStroke();
             }
         }
 
-        public BinPackRectangle(Rectangle Rectangle) { this.Rectangle = Rectangle; IsSelected = false; IsAssigned = false; }
+        public BinPackRectangle(Rectangle Rectangle) { this.Rectangle = Rectangle; IsSelected = false; IsAssigned = false; IsHovered = false; }
 
         public int Draw(Canvas canvas)
         {
@@ -45,6 +55,13 @@ namespace BinPacking
             }
 
             return -1;
+        }
+
+        public bool IsIn(int x, int y, int threshold) => x + threshold >= XPos && y + threshold >= YPos && x - threshold <= XPos + Rectangle.Width && y -threshold <= YPos + Rectangle.Height;
+
+        private void SetDefaultStroke() {
+            Rectangle.Stroke = new SolidColorBrush(Colors.Black);
+            Rectangle.StrokeThickness = 1;
         }
     }
 }

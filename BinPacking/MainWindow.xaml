@@ -10,8 +10,9 @@
         <Border x:Name="mainBorder" BorderBrush="Black" BorderThickness="1" HorizontalAlignment="Left" Height="399" Margin="10,10,0,0" VerticalAlignment="Top" Width="451" RenderTransformOrigin="-1.348,0.088">
             <Canvas x:Name="mainCanvas" Width="{Binding ElementName=mainBorder, Path=Width}" Height="{Binding ElementName=mainBorder, Path=Height}"/>
         </Border>
-        <Border x:Name="sideBorder" BorderBrush="Black" BorderThickness="1" HorizontalAlignment="Left" Height="372" Margin="466,37,0,0" VerticalAlignment="Top" Width="316">
-            <Canvas x:Name="sideCanvas" Width="{Binding ElementName=sideBorder, Path=Width}" Height="{Binding ElementName=sideBorder, Path=Height}"/>
+        <Border x:Name="sideBorder" BorderBrush="Black" BorderThickness="1" HorizontalAlignment="Left" Height="372" Margin="466,37,0,0" VerticalAlignment="Top" Width="316" MouseLeftButtonDown="SideCanvas_MouseLeftButtonDown"
+                MouseMove="SideBorder_MouseMove">
+            <Canvas x:Name="sideCanvas" Width="{Binding ElementName=sideBorder, Path=Width}" Height="{Binding ElementName=sideBorder, Path=Height}" Background="Transparent"/>
         </Border>
         <Label x:Name="label" Content="Rectangles to be drawn:" HorizontalAlignment="Left" Margin="466,11,0,0" VerticalAlignment="Top" Width="136"/>
         <Button x:Name="BtnNextStep" Content="One Step >" HorizontalAlignment="Left" Margin="690,14,0,0" VerticalAlignment="Top" Width="92" Click="BtnNextStep_Click"/>

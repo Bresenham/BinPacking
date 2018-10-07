@@ -3,7 +3,9 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using System.Windows;
 using System.Windows.Controls;
+using System.Windows.Shapes;
 
 namespace BinPacking
 {
@@ -26,7 +28,7 @@ namespace BinPacking
         private int StartX = 0;
         private int StartY = 0;
 
-        public Drawer(List<BinPackRectangle> Rectangles, Canvas SideCanvas, Canvas MainCanvas){
+        public Drawer(List<BinPackRectangle> Rectangles, Canvas SideCanvas, Canvas MainCanvas) {
             this.Rectangles = Rectangles;
             this.SideCanvas = SideCanvas;
             this.MainCanvas = MainCanvas;
@@ -38,23 +40,40 @@ namespace BinPacking
         {
             if (SelectedRectangle is null)
                 return false;
+            SelectedRectangle.IsSelected = false;
             UpdateSideCanvas();
-            (int XPos, int YPos) = MainCanvasSpace.GetFreeSpace(Convert.ToInt32(SelectedRectangle.Rectangle.Width), 
+            (int XPos, int YPos) = MainCanvasSpace.GetFreeSpace(Convert.ToInt32(SelectedRectangle.Rectangle.Width),
                                                                 Convert.ToInt32(SelectedRectangle.Rectangle.Height));
-            if(YPos >= 0 && YPos >= 0)
+            if (YPos >= 0 && YPos >= 0)
             {
                 SelectedRectangle.XPos = XPos;
                 SelectedRectangle.YPos = YPos;
                 SelectedRectangle.IsAssigned = true;
-                SelectedRectangle.IsSelected = false;
                 UpdateMainCanvas();
                 MainCanvasSpace.DrawSpaces(MainCanvas);
+                SelectedRectangle = null;
                 return true;
             }
             return false;
         }
 
-        public void SelectRandomRectangle()
+        public void OnSideCanvasClick(Point pos) {
+            Rectangles.ForEach(rect => rect.IsSelected = false);
+            BinPackRectangle Rect = Rectangles.Where(rect => rect.IsIn(Convert.ToInt32(pos.X), Convert.ToInt32(pos.Y), 0)).FirstOrDefault();
+            if (Rect != null) {
+                Rect.IsSelected = true;
+                SelectedRectangle = Rect;
+            }
+        }
+
+        public void OnSideCanvasHover(Point pos) {
+            Rectangles.ForEach(rect => rect.IsHovered = false);
+            BinPackRectangle HoveredRect = Rectangles.Where(rect => rect.IsIn(Convert.ToInt32(pos.X), Convert.ToInt32(pos.Y), 3)).FirstOrDefault();
+            if(HoveredRect != null)
+                HoveredRect.IsHovered = true;
+        }
+
+        private void SelectRandomRectangle()
         {
             SelectedRectangle = null;
             if (Rectangles.Where(rect => !rect.IsAssigned).Count() > 0)
