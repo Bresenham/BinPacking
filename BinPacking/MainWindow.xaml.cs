@@ -20,10 +20,9 @@ namespace BinPacking
     /// </summary>
     public partial class MainWindow : Window
     {
-        private List<BinPackRectangle> rectangles = new List<BinPackRectangle>();
+        private readonly List<BinPackRectangle> rectangles = new List<BinPackRectangle>();
         private readonly Random rnd = new Random();
         private readonly Drawer Drawer;
-        private bool selectedRectangle = false;
 
         public MainWindow()
         {
@@ -53,17 +52,10 @@ namespace BinPacking
                 }));
         }
 
-        private void BtnNextStep_Click(object sender, RoutedEventArgs e)
-        {
-            Drawer.AssignRectangleToMain();
-        }
+        private void BtnNextStep_Click(object sender, RoutedEventArgs e) => Drawer.NextStep();
 
-        private void SideCanvas_MouseLeftButtonDown(object sender, MouseButtonEventArgs e) {
-            Drawer.OnSideCanvasClick(e.GetPosition(sideCanvas));
-        }
+        private void SideCanvas_MouseLeftButtonDown(object sender, MouseButtonEventArgs e) => Drawer.OnSideCanvasClick(e.GetPosition(sideCanvas));
 
-        private void SideBorder_MouseMove(object sender, MouseEventArgs e) {
-            Drawer.OnSideCanvasHover(e.GetPosition(sideCanvas));
-        }
+        private void SideBorder_MouseMove(object sender, MouseEventArgs e) => Drawer.OnSideCanvasHover(e.GetPosition(sideCanvas));
     }
 }

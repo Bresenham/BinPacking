@@ -39,6 +39,41 @@ namespace BinPacking
             }
         });
 
+        public bool MarkRespaced()
+        {
+            if (FreeSpace.Count < 3)
+                return false; ;
+            FreeSpace.ForEach(space => space.IsHighlighted = false);
+            Space smallestSpace = FreeSpace.Where(space => space.Rectangle.Width == FreeSpace.Min(s => s.Rectangle.Width)).FirstOrDefault();
+            if (smallestSpace != null)
+            {
+                smallestSpace.IsHighlighted = true;
+                Space adjacentSpace = FreeSpace.Where(space => space.IsAdjacentTo(smallestSpace)).FirstOrDefault();
+                adjacentSpace.IsHighlighted = true;
+                return true;
+            }
+            return false;
+        }
+
+        public void ReSpace()
+        {
+            if (FreeSpace.Count < 3)
+                return;
+            FreeSpace.ForEach(space => space.IsHighlighted = false);
+            Space smallestSpace = FreeSpace.Where(space => space.Rectangle.Width == FreeSpace.Min(s => s.Rectangle.Width)).FirstOrDefault();
+            if (smallestSpace != null)
+            {
+                smallestSpace.IsHighlighted = true;
+                Space adjacentSpace = FreeSpace.Where(space => space.IsAdjacentTo(smallestSpace)).FirstOrDefault();
+                adjacentSpace.IsHighlighted = true;
+                int newHeight = adjacentSpace.Height + smallestSpace.Height;
+                FreeSpace.Add(new Space(smallestSpace.Width, newHeight, smallestSpace.X, smallestSpace.Y));
+                FreeSpace.Add(new Space(adjacentSpace.Width - smallestSpace.Width, adjacentSpace.Height, adjacentSpace.X, adjacentSpace.Y));
+                FreeSpace.Remove(smallestSpace);
+                FreeSpace.Remove(adjacentSpace);
+            }
+        }
+
         private Space ChooseBestFit(int Width, int Height)
         {
             Dictionary<Space, int> dict = new Dictionary<Space, int>();
@@ -55,10 +90,16 @@ namespace BinPacking
         public int X { get; }
         public int Y { get; }
 
+        private bool _isHighlighted = false;
+        public bool IsHighlighted { get { return _isHighlighted; } set {
+                _isHighlighted = value;
+                if (value) Rectangle.Stroke = new SolidColorBrush(Colors.Purple);
+                else Rectangle.Stroke = new SolidColorBrush(Colors.Red); }
+        }
+
         public Rectangle Rectangle { get; }
 
         public Space(int Width, int Height) : this(Width, Height, 0, 0) { }
-
         public Space(int Width, int Height, int X, int Y)
         {
             Rectangle = new Rectangle
@@ -66,8 +107,7 @@ namespace BinPacking
                 Width = Width,
                 Height = Height,
                 Stroke = new SolidColorBrush(Colors.Red),
-                StrokeThickness = 1,
-                Fill = new SolidColorBrush(Colors.LightGray)
+                StrokeThickness = 1
             };
 
             this.Width = Width;
@@ -77,5 +117,7 @@ namespace BinPacking
         }
 
         public bool DoesFit(int Width, int Height) => this.Width >= Width && this.Height >= Height;
+
+        public bool IsAdjacentTo(Space that) => X == that.X + that.Width || X + Width == that.X || Y == that.Y + that.Height || Y + Height == that.Y;
     }
 }

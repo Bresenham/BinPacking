@@ -13,8 +13,11 @@ namespace BinPacking
     {
         public int? XPos { get; set; }
         public int? YPos { get; set; }
+
         public Rectangle Rectangle { get; }
+
         public bool IsAssigned { get; set; }
+
         private bool _isSelected = false;
         public bool IsSelected
         {
@@ -28,6 +31,7 @@ namespace BinPacking
                     SetDefaultStroke();
             }
         }
+
         public bool IsHovered
         {
             get { return IsHovered; }
