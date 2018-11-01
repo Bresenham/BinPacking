@@ -1,0 +1,31 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 12.00
+# Visual Studio 15
+VisualStudioVersion = 15.0.28010.2046
+MinimumVisualStudioVersion = 10.0.40219.1
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "BinPacking", "BinPacking\BinPacking.csproj", "{A810B78A-A4E6-4D52-929F-2E41D6A124BF}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Tests", "TestProject\Tests.csproj", "{31103C9A-0539-4C59-8701-4148055F68E8}"
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Any CPU = Debug|Any CPU
+		Release|Any CPU = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{A810B78A-A4E6-4D52-929F-2E41D6A124BF}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{A810B78A-A4E6-4D52-929F-2E41D6A124BF}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{A810B78A-A4E6-4D52-929F-2E41D6A124BF}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{A810B78A-A4E6-4D52-929F-2E41D6A124BF}.Release|Any CPU.Build.0 = Release|Any CPU
+		{31103C9A-0539-4C59-8701-4148055F68E8}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{31103C9A-0539-4C59-8701-4148055F68E8}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{31103C9A-0539-4C59-8701-4148055F68E8}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{31103C9A-0539-4C59-8701-4148055F68E8}.Release|Any CPU.Build.0 = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(ExtensibilityGlobals) = postSolution
+		SolutionGuid = {F7316414-4686-45A0-A0C7-49A2B0CCC2A5}
+	EndGlobalSection
+EndGlobal
